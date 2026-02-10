@@ -716,8 +716,11 @@
                                 <input type="number" placeholder="Protéines" className="w-full bg-black/40 text-white p-3 rounded-xl border border-white/5 outline-none" value={form.protein} onChange={(e) => setForm({ ...form, protein: e.target.value })} />
                             </div>
                             <button onClick={() => {
-                                if (!form.name.trim()) return;
-                                addCustomFood({ name: form.name, kcal: parseInt(form.kcal) || 0, protein: parseFloat(form.protein) || 0, type: form.type });
+                                if (!form.name.trim() || !form.kcal || parseInt(form.kcal) <= 0) {
+                                    alert('Veuillez remplir le nom et les calories (valeur > 0)');
+                                    return;
+                                }
+                                addCustomFood({ name: form.name, kcal: parseInt(form.kcal), protein: parseFloat(form.protein) || 0, type: form.type });
                                 setIsAdding(false);
                                 setForm({ name: '', kcal: '', protein: '', type: 'cru' });
                             }} className="w-full bg-white text-black py-4 rounded-xl font-bold hover:scale-[1.02] transition-transform">ENREGISTRER</button>
